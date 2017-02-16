@@ -1,5 +1,5 @@
 # self-signed-server-certs-with-ca
-Scripts for generating a self signed CA and self signed X509 certificates signed by the CA. Generates PEM-files, PKCS12 and JKS for multi purposes such as Java servers.
+Scripts for generating a self signed CA and self signed X509 certificates signed by the CA. Generates HTTPS server certificate for TLS/SSL communication. Generates PEM, PKCS12 and JKS files for multi purposes such as Java servers. Intended for testing purposes.
 
 #Quick start
 
