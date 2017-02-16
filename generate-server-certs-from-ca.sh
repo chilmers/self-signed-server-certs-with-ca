@@ -17,20 +17,21 @@
 if [ "$#" -lt 1 ]
 then
 	echo 'Usage: generate-server-certs-from-ca.sh [server common name]'
+    echo 'Example: generate-server-certs-from-ca.sh www.chilmers.se'
 else
     # Check prerequisites
     if [ ! -f "./ca.crt.pem" ] || [ ! -f "./ca.key.pem" ] ; then
-        echo 'Missing required ca.crt.pem or ca.key.pem'
+        echo 'Missing required ./ca.crt.pem or ./ca.key.pem'
         echo 'First run generate-ca.sh since since the script requires the generated ca.key.pem and ca.crt.pem'
         exit -1
     fi
     
     # Create a workspace
     if [ -d "./$1" ] ; then
-        echo "$1 already exists"
+        echo "./$1 already exists"
         exit -1
     fi
-    mkdir $1
+    mkdir ./$1
         
     # Generate a server key
     echo "-- Generating Server Private Key"
@@ -57,16 +58,16 @@ else
 
     # Sign the certificate request with the CA
     echo "-- Signing the certificate request with the CA"
-    openssl x509 -req -days 365 -in ./$1/$1.csr.pem -CA ca.crt.pem -CAkey ca.key.pem -set_serial ${value} -out ./$1/$1.crt.pem
+    openssl x509 -req -days 365 -in ./$1/$1.csr.pem -CA ./ca.crt.pem -CAkey ./ca.key.pem -set_serial ${value} -out ./$1/$1.crt.pem
 
     # Collect in PKCS12
     openssl pkcs12 -export -in ./$1/$1.crt.pem -inkey ./$1/$1.key.pem \
                    -out ./$1/$1-cert-and-key.p12 -name $1 \
-                   -CAfile ca.crt.pem -caname root \
+                   -CAfile ./ca.crt.pem -caname root \
                    -password pass:password
 
     # Generate a trust store for trusting only this certificate, not all certificates issued by the ca
-    keytool -importcert -alias $1 -file $1/$1.crt.pem -v -trustcacerts -noprompt -keystore $1/$1-only-not-entire-ca-truststore.jks -storepass password
+    keytool -importcert -alias $1 -file ./$1/$1.crt.pem -v -trustcacerts -noprompt -keystore ./$1/$1-only-not-entire-ca-truststore.jks -storepass password
 
     # Add PKCS12 content to JKS 
     keytool -importkeystore \

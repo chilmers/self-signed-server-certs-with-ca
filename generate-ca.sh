@@ -17,13 +17,13 @@
 # Generate a non encrypted private key for the CA (add -des3 for encryption)
 # Output: ca.key.pem
 echo "-- Generating CA Private Key"
-openssl genrsa -out ca.key.pem 1024
+openssl genrsa -out ./ca.key.pem 1024
 
 # Generate a CA cert using the CA's private key
 # Output: ca.crt.pem
 echo "-- Generating CA Certificate"
-openssl req -verbose -new -x509 -nodes -set_serial 998877 -subj "/CN=TheCA/OU=NOT FOR PRODUCTION/O=Fictive Certification Authority/ST=GBG/C=SE" -days 7300 -key ca.key.pem -out ca.crt.pem
+openssl req -verbose -new -x509 -nodes -set_serial 998877 -subj "/CN=TheCA/OU=NOT FOR PRODUCTION/O=Fictive Certification Authority/ST=GBG/C=SE" -days 7300 -key ./ca.key.pem -out ./ca.crt.pem
 
-keytool -importcert -alias ca -file ca.crt.pem -v -trustcacerts -noprompt -keystore ca-truststore.jks -storepass password
+keytool -importcert -alias ca -file ./ca.crt.pem -v -trustcacerts -noprompt -keystore ./ca-truststore.jks -storepass password
 
 ls -latr
