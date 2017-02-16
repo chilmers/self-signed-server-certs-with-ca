@@ -10,7 +10,7 @@ Scripts for generating a self signed CA and self signed X509 certificates signed
 
 All certificates generated and signed by the CA are issued a serial number based on the serial number counter stored in serialno.dat.
 The serialno.dat will be created if it doesn't exist. 
-If you remove the serialno.dat the counter will restart and you might get serial number collissions.
+If you remove the serialno.dat the counter will restart and you might get serial number collisions.
 
 #Trust store
 
