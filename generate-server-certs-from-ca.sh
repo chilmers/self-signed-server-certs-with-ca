@@ -75,5 +75,5 @@ else
             -srckeystore ./$1/$1-cert-and-key.p12 -srcstoretype PKCS12 -srcstorepass password \
             -alias $1
 
-    ls -latr
+    ls -latr ./$1/
 fi
